@@ -1,0 +1,8 @@
+# Debug configuration
+build:debug --copt=-g 
+build:debug --copt=-O0
+build:debug --strip=never
+
+# Release configuration
+build:release --copt=-O2
+build:release --strip=always
