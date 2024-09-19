@@ -1,5 +1,5 @@
 cc_library(
-    name = "heap",
+    name = "binary_search",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["inc/*.hpp"]),
     copts = ["-std=c++20"],
@@ -8,8 +8,5 @@ cc_library(
         "//lib:__subpackages__",
         "//src:__subpackages__",
         "//test:__subpackages__",
-    ],
-    deps = [
-        "//lib/common",
     ],
 )
