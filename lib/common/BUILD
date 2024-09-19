@@ -2,7 +2,6 @@ cc_library(
     name = "common",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["inc/*.hpp"]),
-    copts = ["-std=c++20"],
     includes = ["inc"],
     visibility = [
         "//lib:__subpackages__",

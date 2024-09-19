@@ -28,11 +28,14 @@
 template <typename Comparable>
 class BinarySearch {
  public:
-  static int find(std::vector<Comparable> &data, Comparable &&elem);
+  static int Find(std::vector<Comparable> &data, Comparable &&elem);
+  static int FindBalance(std::vector<Comparable> &data, Comparable &&elem);
+  static int FindLeftMost(std::vector<Comparable> &data, Comparable &&elem);
+  static int FindRightMost(std::vector<Comparable> &data, Comparable &&elem);
 };
 
 template <typename Comparable>
-int BinarySearch<Comparable>::find(std::vector<Comparable> &data, Comparable &&elem) {
+int BinarySearch<Comparable>::Find(std::vector<Comparable> &data, Comparable &&elem) {
   int i = 0, j = data.size() - 1;
   while (i <= j) {
     int m = (i + j) >> 1;
@@ -44,5 +47,50 @@ int BinarySearch<Comparable>::find(std::vector<Comparable> &data, Comparable &&e
       return m;
     }
   }
-  return -1;
+  return -i - 1;
+}
+
+template <typename Comparable>
+int BinarySearch<Comparable>::FindBalance(std::vector<Comparable> &data, Comparable &&elem) {
+  int i = 0, j = data.size();
+  while (j - i > 1) {
+    int m = (i + j) >> 1;
+    if (elem < data.at(m)) {
+      j = m;
+    } else {
+      i = m;
+    }
+  }
+  if (elem == data.at(i)) {
+    return i;
+  }
+  return -i - 1;
+}
+
+template <typename Comparable>
+int BinarySearch<Comparable>::FindLeftMost(std::vector<Comparable> &data, Comparable &&elem) {
+  int i = 0, j = data.size() - 1;
+  while (i <= j) {
+    int m = (i + j) >> 1;
+    if (elem <= data.at(m)) {
+      j = m - 1;
+    } else {
+      i = m + 1;
+    }
+  }
+  return i;
+}
+
+template <typename Comparable>
+int BinarySearch<Comparable>::FindRightMost(std::vector<Comparable> &data, Comparable &&elem) {
+  int i = 0, j = data.size() - 1;
+  while (i <= j) {
+    int m = (i + j) >> 1;
+    if (elem >= data.at(m)) {
+      i = m + 1;
+    } else {
+      j = m - 1;
+    }
+  }
+  return j;
 }
