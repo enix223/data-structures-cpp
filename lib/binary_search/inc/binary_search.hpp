@@ -34,6 +34,11 @@ class BinarySearch {
   static int FindRightMost(std::vector<Comparable> &data, Comparable &&elem);
 };
 
+/// @brief Find `elem` from the data vector with binary search algorithm
+/// @tparam Comparable the type of the elem
+/// @param data vector of the sorted data
+/// @param elem element to search
+/// @return the index of `elem` if found, or return the negative insertion point minus 1 if not found
 template <typename Comparable>
 int BinarySearch<Comparable>::Find(std::vector<Comparable> &data, Comparable &&elem) {
   int i = 0, j = data.size() - 1;
@@ -50,6 +55,11 @@ int BinarySearch<Comparable>::Find(std::vector<Comparable> &data, Comparable &&e
   return -i - 1;
 }
 
+/// @brief Find `elem` from the data vector with left-right balance binary search algorithm
+/// @tparam Comparable the type of the elem
+/// @param data vector of the sorted data
+/// @param elem element to search
+/// @return the index of `elem` if found, or return the negative insertion point minus 1 if not found
 template <typename Comparable>
 int BinarySearch<Comparable>::FindBalance(std::vector<Comparable> &data, Comparable &&elem) {
   int i = 0, j = data.size();
@@ -64,9 +74,14 @@ int BinarySearch<Comparable>::FindBalance(std::vector<Comparable> &data, Compara
   if (elem == data.at(i)) {
     return i;
   }
-  return -i - 1;
+  return j > 1 ? -j - 1 : -i - 1;
 }
 
+/// @brief Find the left most index for the given item `elem` within the vector `data`
+/// @tparam Comparable the type of the elem
+/// @param data vector of the data to search with
+/// @param elem element to search
+/// @return the index of the left most element which greater than or equals `elem`
 template <typename Comparable>
 int BinarySearch<Comparable>::FindLeftMost(std::vector<Comparable> &data, Comparable &&elem) {
   int i = 0, j = data.size() - 1;
@@ -81,6 +96,11 @@ int BinarySearch<Comparable>::FindLeftMost(std::vector<Comparable> &data, Compar
   return i;
 }
 
+/// @brief Find the right most position for the given item `elem` within the vector `data`
+/// @tparam Comparable the type of the elem
+/// @param data vector of the data to search with
+/// @param elem element to search
+/// @return the index of the right most element which less than or equals `elem`
 template <typename Comparable>
 int BinarySearch<Comparable>::FindRightMost(std::vector<Comparable> &data, Comparable &&elem) {
   int i = 0, j = data.size() - 1;
