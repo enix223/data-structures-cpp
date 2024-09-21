@@ -28,29 +28,28 @@
 
 #include "comparable.hpp"
 
-using std::vector;
-
 template <typename Comparable>
 class BinaryHeap {
- private:
-  vector<Comparable> data;
-  int size;
-
-  void heapify();
-  void down(int index);
-  void up(int index);
-  void swap(int i, int j);
-
  public:
   explicit BinaryHeap(int capaicty = 10);
-  explicit BinaryHeap(const vector<Comparable>& items);
+  explicit BinaryHeap(const std::vector<Comparable>& items);
+  ~BinaryHeap();
 
-  void insert(Comparable& element);
-  void insert(Comparable&& element);
-  bool isEmpty() const;
-  const Comparable& min() const;
-  void deleteMin();
-  void clear();
+  void Insert(Comparable& element);
+  void Insert(Comparable&& element);
+  bool IsEmpty() const;
+  const Comparable& Min() const;
+  void DeleteMin();
+  void Clear();
+
+ private:
+  std::vector<Comparable> data_;
+  int size_;
+
+  void Heapify();
+  void Down(int index);
+  void Up(int index);
+  void Swap(int i, int j);
 };
 
 /**
@@ -59,49 +58,52 @@ class BinaryHeap {
 
 template <typename Comparable>
 BinaryHeap<Comparable>::BinaryHeap(int capcity) {
-  data = std::vector<int>(10);
-  size = 0;
+  data_ = std::vector<int>(10);
+  size_ = 0;
 }
 
 template <typename Comparable>
-BinaryHeap<Comparable>::BinaryHeap(const vector<Comparable>& items) {
-  data = items;
-  size = items.size();
-  heapify();
+BinaryHeap<Comparable>::BinaryHeap(const std::vector<Comparable>& items) {
+  data_ = items;
+  size_ = items.size();
+  Heapify();
 }
 
 template <typename Comparable>
-bool BinaryHeap<Comparable>::isEmpty() const {
-  return size == 0;
+BinaryHeap<Comparable>::~BinaryHeap() {}
+
+template <typename Comparable>
+bool BinaryHeap<Comparable>::IsEmpty() const {
+  return size_ == 0;
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::insert(Comparable& element) {
-  data.push_back(element);
-  up(size++);
+void BinaryHeap<Comparable>::Insert(Comparable& element) {
+  data_.push_back(element);
+  Up(size_++);
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::insert(Comparable&& element) {
-  insert(element);
+void BinaryHeap<Comparable>::Insert(Comparable&& element) {
+  Insert(element);
 }
 
 template <typename Comparable>
-const Comparable& BinaryHeap<Comparable>::min() const {
-  return data.at(0);
+const Comparable& BinaryHeap<Comparable>::Min() const {
+  return data_.at(0);
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::deleteMin() {
-  swap(--size, 0);
-  data.pop_back();
-  down(0);
+void BinaryHeap<Comparable>::DeleteMin() {
+  Swap(--size_, 0);
+  data_.pop_back();
+  Down(0);
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::clear() {
-  data.clear();
-  size = 0;
+void BinaryHeap<Comparable>::Clear() {
+  data_.clear();
+  size_ = 0;
 }
 
 /**
@@ -109,42 +111,42 @@ void BinaryHeap<Comparable>::clear() {
  */
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::heapify() {
-  for (int i = size / 2; i >= 0; i--) {
-    down(i);
+void BinaryHeap<Comparable>::Heapify() {
+  for (int i = size_ / 2; i >= 0; i--) {
+    Down(i);
   }
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::down(int index) {
+void BinaryHeap<Comparable>::Down(int index) {
   int l = index * 2 + 1;
   int r = l + 1;
   int min = index;
-  if (l < size && data.at(l) < data.at(min)) {
+  if (l < size_ && data_.at(l) < data_.at(min)) {
     min = l;
   }
-  if (r < size && data.at(r) < data.at(min)) {
+  if (r < size_ && data_.at(r) < data_.at(min)) {
     min = r;
   }
   if (min == index) {
     return;
   }
-  swap(min, index);
-  down(min);
+  Swap(min, index);
+  Down(min);
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::up(int index) {
+void BinaryHeap<Comparable>::Up(int index) {
   int p = index / 2;
-  if (data.at(p) > data.at(index)) {
-    swap(p, index);
-    up(p);
+  if (data_.at(p) > data_.at(index)) {
+    Swap(p, index);
+    Up(p);
   }
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::swap(int i, int j) {
-  int tmp = data.at(i);
-  data.at(i) = data.at(j);
-  data.at(j) = tmp;
+void BinaryHeap<Comparable>::Swap(int i, int j) {
+  int tmp = data_.at(i);
+  data_.at(i) = data_.at(j);
+  data_.at(j) = tmp;
 }

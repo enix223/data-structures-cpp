@@ -27,57 +27,57 @@
 
 TEST(heap, createa_heap_should_be_ok) {
   BinaryHeap<int> heap = BinaryHeap<int>(10);
-  EXPECT_TRUE(heap.isEmpty());
+  EXPECT_TRUE(heap.IsEmpty());
 
-  heap.insert(1);
-  EXPECT_FALSE(heap.isEmpty());
+  heap.Insert(1);
+  EXPECT_FALSE(heap.IsEmpty());
 }
 
 TEST(heap, min_should_return_correct_value) {
-  BinaryHeap<int> heap = BinaryHeap<int>(vector<int>{3, 2, 1, 5, 0});
-  ASSERT_EQ(heap.min(), 0);
+  BinaryHeap<int> heap = BinaryHeap<int>(std::vector<int>{3, 2, 1, 5, 0});
+  ASSERT_EQ(heap.Min(), 0);
 }
 
 TEST(heap, clear_should_ok) {
   BinaryHeap<int> heap = BinaryHeap<int>(10);
-  EXPECT_TRUE(heap.isEmpty());
+  EXPECT_TRUE(heap.IsEmpty());
 
-  heap.insert(1);
-  heap.insert(2);
-  heap.clear();
+  heap.Insert(1);
+  heap.Insert(2);
+  heap.Clear();
 
-  EXPECT_TRUE(heap.isEmpty());
+  EXPECT_TRUE(heap.IsEmpty());
 
-  heap = BinaryHeap<int>(vector<int>{1, 2, 3});
-  EXPECT_FALSE(heap.isEmpty());
+  heap = BinaryHeap<int>(std::vector<int>{1, 2, 3});
+  EXPECT_FALSE(heap.IsEmpty());
 
-  heap.clear();
-  EXPECT_TRUE(heap.isEmpty());
+  heap.Clear();
+  EXPECT_TRUE(heap.IsEmpty());
 }
 
 TEST(heap, delete_should_remove_success) {
-  BinaryHeap<int> heap = BinaryHeap<int>(vector<int>{5, 4, 3, 2, 1, 0});
-  int min = heap.min();
+  BinaryHeap<int> heap = BinaryHeap<int>(std::vector<int>{5, 4, 3, 2, 1, 0});
+  int min = heap.Min();
   EXPECT_EQ(min, 0);
-  heap.deleteMin();
+  heap.DeleteMin();
 
-  min = heap.min();
+  min = heap.Min();
   EXPECT_EQ(min, 1);
-  heap.deleteMin();
+  heap.DeleteMin();
 
-  min = heap.min();
+  min = heap.Min();
   EXPECT_EQ(min, 2);
-  heap.deleteMin();
+  heap.DeleteMin();
 
-  min = heap.min();
+  min = heap.Min();
   EXPECT_EQ(min, 3);
-  heap.deleteMin();
+  heap.DeleteMin();
 
-  min = heap.min();
+  min = heap.Min();
   EXPECT_EQ(min, 4);
-  heap.deleteMin();
+  heap.DeleteMin();
 
-  min = heap.min();
+  min = heap.Min();
   EXPECT_EQ(min, 5);
-  heap.deleteMin();
+  heap.DeleteMin();
 }
