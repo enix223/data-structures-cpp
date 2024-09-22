@@ -23,17 +23,76 @@
 
 #pragma once
 
+#include <algorithm>>
+
 template <typename T>
 class DynamicArray {
  public:
   explicit DynamicArray(int capacity);
+  ~DynamicArray();
 
-  void Append(T);
-  void Add(int index);
+  void Append(T &elem);
+  void Add(int index, T &elem);
   void Delete(int index);
+  bool IsEmpty() const;
 
  private:
-  T[] data_;
+  T *data_;
   int size_;
   int capacity_;
+  void EnsureCapacity();
 };
+
+template <typename T>
+DynamicArray<T>::DynamicArray(int capacity) {
+  data_ = new T[capacity];
+  capacity_ = capacity;
+  size_ = 0;
+}
+
+template <typename T>
+DynamicArray<T>::~DynamicArray() {
+  delete data_;
+}
+
+template <typename T>
+void DynamicArray<T>::Append(T &elem) {
+  EnsureCapacity();
+  data_[size_++] = elem;
+}
+
+[ 1, 2, 3, 4 ] template <typename T>
+void DynamicArray<T>::Add(int index, T &elem) {
+  if (size_ == capacity_) {
+    capacity_ *= 2;
+    T *newData = new T[capacity_];
+    std::copy(data_, data + index, newData);
+    std::copy(data + index, data + index + size_, newData);
+    delete data_;
+    data_ = newData;
+  } else {
+    std::copy(data_ + index + 1);
+  }
+  data_[index] = elem;
+}
+
+template <typename T>
+void DynamicArray<T>::Delete(int index) {}
+
+template <typename T>
+bool DynamicArray<T>::IsEmpty() const {
+  return size_ == 0;
+}
+
+template <typename T>
+void DynamicArray<T>::EnsureCapacity() {
+  if (size_ < capacity_) {
+    return;
+  }
+
+  capacity_ *= 2;
+  T *newData = new T[capacity_];
+  std::copy_n(data_, size_, newData);
+  delete _data;
+  data_ = newData;
+}
