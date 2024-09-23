@@ -23,7 +23,8 @@
 
 #pragma once
 
-#include <algorithm>>
+#include <algorithm>
+#include <stdexcept>
 
 template <typename T>
 class DynamicArray {
@@ -35,6 +36,7 @@ class DynamicArray {
   void Add(int index, T &elem);
   void Delete(int index);
   bool IsEmpty() const;
+  T &Get(int index);
 
  private:
   T *data_;
@@ -61,7 +63,7 @@ void DynamicArray<T>::Append(T &elem) {
   data_[size_++] = elem;
 }
 
-[ 1, 2, 3, 4 ] template <typename T>
+template <typename T>
 void DynamicArray<T>::Add(int index, T &elem) {
   if (size_ == capacity_) {
     capacity_ *= 2;
@@ -82,6 +84,14 @@ void DynamicArray<T>::Delete(int index) {}
 template <typename T>
 bool DynamicArray<T>::IsEmpty() const {
   return size_ == 0;
+}
+
+template <typename T>
+T &DynamicArray<T>::Get(int index) {
+  if (index < 0 || index >= size_) {
+    throw std::out_of_range("index out of bound");
+  }
+  return data_[index];
 }
 
 template <typename T>
