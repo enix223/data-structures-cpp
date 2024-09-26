@@ -30,7 +30,7 @@ using namespace std;
 
 TEST(binary_search, find_should_work_fine_for_exist_and_non_exist_element) {
   vector<int> vect{1, 2, 5, 6};
-  int res = BinarySearch<int>::Find(vect, 2);
+  int64_t res = BinarySearch<int>::Find(vect, 2);
   ASSERT_EQ(res, 1);
 
   res = BinarySearch<int>::Find(vect, 6);
@@ -48,7 +48,7 @@ TEST(binary_search, find_should_work_fine_for_exist_and_non_exist_element) {
 
 TEST(binary_search, find_balance_should_work_fine_for_exist_and_non_exist_element) {
   vector<int> vect{1, 2, 5, 6};
-  int res = BinarySearch<int>::FindBalance(vect, 2);
+  int64_t res = BinarySearch<int>::FindBalance(vect, 2);
   ASSERT_EQ(res, 1);
 
   res = BinarySearch<int>::FindBalance(vect, 6);
@@ -66,7 +66,7 @@ TEST(binary_search, find_balance_should_work_fine_for_exist_and_non_exist_elemen
 
 TEST(binary_search, find_left_most_should_work_fine_for_exist_and_non_exist_element) {
   vector<int> vect{1, 2, 2, 2, 5, 5, 8, 10};
-  int res = BinarySearch<int>::FindLeftMost(vect, 2);
+  int64_t res = BinarySearch<int>::FindLeftMost(vect, 2);
   ASSERT_EQ(res, 1);
 
   res = BinarySearch<int>::FindLeftMost(vect, 1);
@@ -90,7 +90,7 @@ TEST(binary_search, find_left_most_should_work_fine_for_exist_and_non_exist_elem
 
 TEST(binary_search, find_right_most_should_work_fine_for_exist_and_non_exist_element) {
   vector<int> vect{1, 2, 2, 2, 5, 5, 8, 10};
-  int res = BinarySearch<int>::FindRightMost(vect, 2);
+  int64_t res = BinarySearch<int>::FindRightMost(vect, 2);
   ASSERT_EQ(res, 3);
 
   res = BinarySearch<int>::FindRightMost(vect, 1);

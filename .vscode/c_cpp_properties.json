@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "bazel",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/lib/**"
+            ],
+            "cppStandard": "c++20",
+            "cStandard": "c11"
+        }
+    ],
+    "version": 4
+}

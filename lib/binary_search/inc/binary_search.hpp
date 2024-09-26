@@ -28,10 +28,10 @@
 template <typename Comparable>
 class BinarySearch {
  public:
-  static int Find(std::vector<Comparable> &data, Comparable &&elem);
-  static int FindBalance(std::vector<Comparable> &data, Comparable &&elem);
-  static int FindLeftMost(std::vector<Comparable> &data, Comparable &&elem);
-  static int FindRightMost(std::vector<Comparable> &data, Comparable &&elem);
+  static int64_t Find(std::vector<Comparable> &data, Comparable &&elem);
+  static int64_t FindBalance(std::vector<Comparable> &data, Comparable &&elem);
+  static int64_t FindLeftMost(std::vector<Comparable> &data, Comparable &&elem);
+  static int64_t FindRightMost(std::vector<Comparable> &data, Comparable &&elem);
 };
 
 /// @brief Find `elem` from the data vector with binary search algorithm
@@ -40,10 +40,10 @@ class BinarySearch {
 /// @param elem element to search
 /// @return the index of `elem` if found, or return the negative insertion point minus 1 if not found
 template <typename Comparable>
-int BinarySearch<Comparable>::Find(std::vector<Comparable> &data, Comparable &&elem) {
-  int i = 0, j = data.size() - 1;
+int64_t BinarySearch<Comparable>::Find(std::vector<Comparable> &data, Comparable &&elem) {
+  int64_t i = 0, j = data.size() - 1;
   while (i <= j) {
-    int m = (i + j) >> 1;
+    int64_t m = (i + j) >> 1;
     if (elem < data.at(m)) {
       j = m - 1;
     } else if (elem > data.at(m)) {
@@ -61,10 +61,10 @@ int BinarySearch<Comparable>::Find(std::vector<Comparable> &data, Comparable &&e
 /// @param elem element to search
 /// @return the index of `elem` if found, or return the negative insertion point minus 1 if not found
 template <typename Comparable>
-int BinarySearch<Comparable>::FindBalance(std::vector<Comparable> &data, Comparable &&elem) {
-  int i = 0, j = data.size();
+int64_t BinarySearch<Comparable>::FindBalance(std::vector<Comparable> &data, Comparable &&elem) {
+  int64_t i = 0, j = data.size();
   while (j - i > 1) {
-    int m = (i + j) >> 1;
+    int64_t m = (i + j) >> 1;
     if (elem < data.at(m)) {
       j = m;
     } else {
@@ -83,10 +83,10 @@ int BinarySearch<Comparable>::FindBalance(std::vector<Comparable> &data, Compara
 /// @param elem element to search
 /// @return the index of the left most element which greater than or equals `elem`
 template <typename Comparable>
-int BinarySearch<Comparable>::FindLeftMost(std::vector<Comparable> &data, Comparable &&elem) {
-  int i = 0, j = data.size() - 1;
+int64_t BinarySearch<Comparable>::FindLeftMost(std::vector<Comparable> &data, Comparable &&elem) {
+  int64_t i = 0, j = data.size() - 1;
   while (i <= j) {
-    int m = (i + j) >> 1;
+    int64_t m = (i + j) >> 1;
     if (elem <= data.at(m)) {
       j = m - 1;
     } else {
@@ -102,10 +102,10 @@ int BinarySearch<Comparable>::FindLeftMost(std::vector<Comparable> &data, Compar
 /// @param elem element to search
 /// @return the index of the right most element which less than or equals `elem`
 template <typename Comparable>
-int BinarySearch<Comparable>::FindRightMost(std::vector<Comparable> &data, Comparable &&elem) {
-  int i = 0, j = data.size() - 1;
+int64_t BinarySearch<Comparable>::FindRightMost(std::vector<Comparable> &data, Comparable &&elem) {
+  int64_t i = 0, j = data.size() - 1;
   while (i <= j) {
-    int m = (i + j) >> 1;
+    int64_t m = (i + j) >> 1;
     if (elem >= data.at(m)) {
       i = m + 1;
     } else {

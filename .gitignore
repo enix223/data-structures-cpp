@@ -45,8 +45,6 @@
 /.aswb/
 /.clwb/
 
-.vscode/
-
 # cmake
 /out
 /build/

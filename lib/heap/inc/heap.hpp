@@ -112,7 +112,7 @@ void BinaryHeap<Comparable>::Clear() {
 
 template <typename Comparable>
 void BinaryHeap<Comparable>::Heapify() {
-  for (size_t i = size_ / 2; i >= 0; i--) {
+  for (int64_t i = size_ / 2; i >= 0; i--) {
     Down(i);
   }
 }
