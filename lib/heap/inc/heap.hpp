@@ -44,12 +44,12 @@ class BinaryHeap {
 
  private:
   std::vector<Comparable> data_;
-  int size_;
+  size_t size_;
 
   void Heapify();
-  void Down(int index);
-  void Up(int index);
-  void Swap(int i, int j);
+  void Down(size_t index);
+  void Up(size_t index);
+  void Swap(size_t i, size_t j);
 };
 
 /**
@@ -112,16 +112,16 @@ void BinaryHeap<Comparable>::Clear() {
 
 template <typename Comparable>
 void BinaryHeap<Comparable>::Heapify() {
-  for (int i = size_ / 2; i >= 0; i--) {
+  for (size_t i = size_ / 2; i >= 0; i--) {
     Down(i);
   }
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::Down(int index) {
-  int l = index * 2 + 1;
-  int r = l + 1;
-  int min = index;
+void BinaryHeap<Comparable>::Down(size_t index) {
+  size_t l = index * 2 + 1;
+  size_t r = l + 1;
+  size_t min = index;
   if (l < size_ && data_.at(l) < data_.at(min)) {
     min = l;
   }
@@ -136,8 +136,8 @@ void BinaryHeap<Comparable>::Down(int index) {
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::Up(int index) {
-  int p = index / 2;
+void BinaryHeap<Comparable>::Up(size_t index) {
+  size_t p = index / 2;
   if (data_.at(p) > data_.at(index)) {
     Swap(p, index);
     Up(p);
@@ -145,8 +145,8 @@ void BinaryHeap<Comparable>::Up(int index) {
 }
 
 template <typename Comparable>
-void BinaryHeap<Comparable>::Swap(int i, int j) {
-  int tmp = data_.at(i);
+void BinaryHeap<Comparable>::Swap(size_t i, size_t j) {
+  Comparable tmp = data_.at(i);
   data_.at(i) = data_.at(j);
   data_.at(j) = tmp;
 }
