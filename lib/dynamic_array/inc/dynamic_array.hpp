@@ -29,57 +29,85 @@
 template <typename T>
 class DynamicArray {
  public:
-  explicit DynamicArray(int capacity);
+  explicit DynamicArray(size_t capacity);
+  explicit DynamicArray(T data[], size_t size, size_t capacity);
   ~DynamicArray();
 
-  void Append(T &elem);
-  void Add(int index, T &elem);
-  void Delete(int index);
+  size_t Size() { return size_; }
+  size_t Capacity() { return capacity_; }
+  void Append(T &&elem);
+  void Add(size_t index, T &&elem);
+  void Delete(size_t index);
   bool IsEmpty() const;
-  T &Get(int index);
+  T &Get(size_t index);
 
  private:
   T *data_;
-  int size_;
-  int capacity_;
-  void EnsureCapacity();
+  size_t size_;
+  size_t capacity_;
 };
 
 template <typename T>
-DynamicArray<T>::DynamicArray(int capacity) {
+DynamicArray<T>::DynamicArray(size_t capacity) {
   data_ = new T[capacity];
   capacity_ = capacity;
   size_ = 0;
 }
 
 template <typename T>
+DynamicArray<T>::DynamicArray(T data[], size_t size, size_t capacity) {
+  if (capacity < size) {
+    throw std::invalid_argument("capacity should be greater than or equal size");
+  }
+  data_ = new T[capacity];
+  std::copy(data, data + size, data_);
+  capacity_ = capacity;
+  size_ = size;
+}
+
+template <typename T>
 DynamicArray<T>::~DynamicArray() {
-  delete data_;
+  delete[] data_;
 }
 
 template <typename T>
-void DynamicArray<T>::Append(T &elem) {
-  EnsureCapacity();
-  data_[size_++] = elem;
+void DynamicArray<T>::Append(T &&elem) {
+  Add(size_, elem);
 }
 
 template <typename T>
-void DynamicArray<T>::Add(int index, T &elem) {
+void DynamicArray<T>::Add(size_t index, T &&elem) {
+  if (index > size_) {
+    throw std::out_of_range("invalid index");
+  }
   if (size_ == capacity_) {
     capacity_ *= 2;
     T *newData = new T[capacity_];
-    std::copy(data_, data + index, newData);
-    std::copy(data + index, data + index + size_, newData);
+    if (index > 0) {
+      std::copy(data_, data_ + index, newData);
+    }
+    if (index < size_) {
+      std::copy(data_ + index, data_ + size_ + 1, newData + index + 1);
+    }
     delete data_;
     data_ = newData;
-  } else {
-    std::copy(data_ + index + 1);
+  } else if (index < size_) {
+    std::copy(data_ + index, data_ + size_ + 1, data_ + index + 1);
   }
   data_[index] = elem;
+  size_++;
 }
 
 template <typename T>
-void DynamicArray<T>::Delete(int index) {}
+void DynamicArray<T>::Delete(size_t index) {
+  if (index > size_) {
+    throw std::out_of_range("invalid index");
+  }
+  if (index != size_) {
+    std::copy(data_ + index + 1, data_ + size_, data_ + index);
+  }
+  size_--;
+}
 
 template <typename T>
 bool DynamicArray<T>::IsEmpty() const {
@@ -87,22 +115,9 @@ bool DynamicArray<T>::IsEmpty() const {
 }
 
 template <typename T>
-T &DynamicArray<T>::Get(int index) {
+T &DynamicArray<T>::Get(size_t index) {
   if (index < 0 || index >= size_) {
     throw std::out_of_range("index out of bound");
   }
   return data_[index];
-}
-
-template <typename T>
-void DynamicArray<T>::EnsureCapacity() {
-  if (size_ < capacity_) {
-    return;
-  }
-
-  capacity_ *= 2;
-  T *newData = new T[capacity_];
-  std::copy_n(data_, size_, newData);
-  delete _data;
-  data_ = newData;
 }

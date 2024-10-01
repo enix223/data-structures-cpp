@@ -16,4 +16,4 @@ add_subdirectory(heap)
 add_subdirectory(assign)
 add_subdirectory(lrvalues)
 add_subdirectory(binary_search)
-
+add_subdirectory(dynamic_array)
