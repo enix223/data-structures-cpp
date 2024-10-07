@@ -2,8 +2,8 @@
   "version": 6,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 23,
-    "patch": 0
+    "minor": 12,
+    "patch": 4
   },
   "configurePresets": [
     {
@@ -25,7 +25,18 @@
           "hostOS": ["Windows"]
         }
       }
-    }
+    },
+    {
+        "name": "macos-debug",
+        "displayName": "MacOS Debug",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/out/build/${presetName}",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug",
+          "CMAKE_TOOLCHAIN_FILE": "",
+          "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+        }
+      }
   ],
   "buildPresets": [
     {
@@ -33,6 +44,12 @@
       "hidden": false,
       "configurePreset": "windows-debug",
       "jobs": 4
-    }
+    },
+    {
+        "name": "macos-debug",
+        "hidden": false,
+        "configurePreset": "macos-debug",
+        "jobs": 4
+      }
   ]
 }
