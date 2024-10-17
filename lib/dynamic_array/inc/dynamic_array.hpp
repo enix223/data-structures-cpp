@@ -26,6 +26,8 @@
 #include <algorithm>
 #include <stdexcept>
 
+namespace cppds {
+
 template <typename T>
 class DynamicArray {
  public:
@@ -121,3 +123,5 @@ T &DynamicArray<T>::Get(size_t index) {
   }
   return data_[index];
 }
+
+}  // namespace cppds

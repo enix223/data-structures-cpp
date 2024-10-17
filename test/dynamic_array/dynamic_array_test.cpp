@@ -26,26 +26,26 @@
 #include "gtest/gtest.h"
 
 TEST(dynamic_array, should_allocate_with_capacity_success) {
-  DynamicArray<int> arr = DynamicArray<int>(10);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(10);
   ASSERT_EQ(0, arr.Size());
   ASSERT_EQ(10, arr.Capacity());
 }
 
 TEST(dynamic_array, should_allocate_with_init_data_success) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 10);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 10);
   ASSERT_EQ(4, arr.Size());
   ASSERT_EQ(10, arr.Capacity());
 }
 
 TEST(dynamic_array, allocate_with_invalid_capacity_should_raise) {
   int init[]{1, 2, 3, 4};
-  EXPECT_THROW({ DynamicArray<int> arr = DynamicArray<int>(init, 4, 2); }, std::invalid_argument);
+  EXPECT_THROW({ cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 2); }, std::invalid_argument);
 }
 
 TEST(dynamic_array, add_item_should_success) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 10);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 10);
   arr.Add(2, 5);
   ASSERT_EQ(5, arr.Size());
   ASSERT_EQ(1, arr.Get(0));
@@ -57,7 +57,7 @@ TEST(dynamic_array, add_item_should_success) {
 
 TEST(dynamic_array, add_at_beginning_index_should_success) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 10);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 10);
   arr.Add(0, 5);
   ASSERT_EQ(5, arr.Size());
   ASSERT_EQ(5, arr.Get(0));
@@ -69,7 +69,7 @@ TEST(dynamic_array, add_at_beginning_index_should_success) {
 
 TEST(dynamic_array, add_at_last_index_should_success) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 10);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 10);
   arr.Add(4, 5);
   ASSERT_EQ(5, arr.Size());
   ASSERT_EQ(1, arr.Get(0));
@@ -81,7 +81,7 @@ TEST(dynamic_array, add_at_last_index_should_success) {
 
 TEST(dynamic_array, add_item_should_success_when_expand_needed) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 4);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 4);
   arr.Add(2, 5);
   ASSERT_EQ(5, arr.Size());
   ASSERT_EQ(8, arr.Capacity());
@@ -94,14 +94,14 @@ TEST(dynamic_array, add_item_should_success_when_expand_needed) {
 
 TEST(dynamic_array, add_item_should_raise_when_index_out_of_bound) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 4);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 4);
   ASSERT_THROW({ arr.Add(5, 5); }, std::out_of_range);
   ASSERT_THROW({ arr.Add(-1, 5); }, std::out_of_range);
 }
 
 TEST(dynamic_array, delete_element_at_valid_index_should_success) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 4);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 4);
   arr.Delete(1);
   ASSERT_EQ(3, arr.Size());
   ASSERT_EQ(4, arr.Capacity());
@@ -112,7 +112,7 @@ TEST(dynamic_array, delete_element_at_valid_index_should_success) {
 
 TEST(dynamic_array, delete_element_at_last_index_should_success) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 4);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 4);
   arr.Delete(3);
   ASSERT_EQ(3, arr.Size());
   ASSERT_EQ(4, arr.Capacity());
@@ -123,6 +123,6 @@ TEST(dynamic_array, delete_element_at_last_index_should_success) {
 
 TEST(dynamic_array, delete_element_at_invalid_index_should_failed) {
   int init[]{1, 2, 3, 4};
-  DynamicArray<int> arr = DynamicArray<int>(init, 4, 4);
+  cppds::DynamicArray<int> arr = cppds::DynamicArray<int>(init, 4, 4);
   ASSERT_THROW({ arr.Delete(10); }, std::out_of_range);
 }

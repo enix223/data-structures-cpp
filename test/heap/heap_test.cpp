@@ -26,7 +26,7 @@
 #include "gtest/gtest.h"
 
 TEST(heap, createa_heap_should_be_ok) {
-  BinaryHeap<int> heap = BinaryHeap<int>(10);
+  cppds::BinaryHeap<int> heap = cppds::BinaryHeap<int>(10);
   EXPECT_TRUE(heap.IsEmpty());
 
   heap.Insert(1);
@@ -34,12 +34,12 @@ TEST(heap, createa_heap_should_be_ok) {
 }
 
 TEST(heap, min_should_return_correct_value) {
-  BinaryHeap<int> heap = BinaryHeap<int>(std::vector<int>{3, 2, 1, 5, 0});
+  cppds::BinaryHeap<int> heap = cppds::BinaryHeap<int>(std::vector<int>{3, 2, 1, 5, 0});
   ASSERT_EQ(heap.Min(), 0);
 }
 
 TEST(heap, clear_should_ok) {
-  BinaryHeap<int> heap = BinaryHeap<int>(10);
+  cppds::BinaryHeap<int> heap = cppds::BinaryHeap<int>(10);
   EXPECT_TRUE(heap.IsEmpty());
 
   heap.Insert(1);
@@ -48,7 +48,7 @@ TEST(heap, clear_should_ok) {
 
   EXPECT_TRUE(heap.IsEmpty());
 
-  heap = BinaryHeap<int>(std::vector<int>{1, 2, 3});
+  heap = cppds::BinaryHeap<int>(std::vector<int>{1, 2, 3});
   EXPECT_FALSE(heap.IsEmpty());
 
   heap.Clear();
@@ -56,7 +56,7 @@ TEST(heap, clear_should_ok) {
 }
 
 TEST(heap, delete_should_remove_success) {
-  BinaryHeap<int> heap = BinaryHeap<int>(std::vector<int>{5, 4, 3, 2, 1, 0});
+  cppds::BinaryHeap<int> heap = cppds::BinaryHeap<int>(std::vector<int>{5, 4, 3, 2, 1, 0});
   int min = heap.Min();
   EXPECT_EQ(min, 0);
   heap.DeleteMin();

@@ -25,6 +25,8 @@
 
 #include <vector>
 
+namespace cppds {
+
 template <typename Comparable>
 class BinarySearch {
  public:
@@ -114,3 +116,5 @@ int64_t BinarySearch<Comparable>::FindRightMost(std::vector<Comparable> &data, C
   }
   return j;
 }
+
+}  // namespace cppds

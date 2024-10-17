@@ -22,6 +22,95 @@
  */
 
 #pragma once
+#include <stdexcept>
+#include <vector>
+
+namespace cppds {
 
 template <typename T>
-class LinkedList {};
+class LinkedList {
+ public:
+  explicit LinkedList();
+
+  ~LinkedList();
+
+  void Append(T* item);
+
+  void DeleteAt(size_t index);
+
+  void AddAt(size_t index, T* item);
+
+ private:
+  struct Node {
+    T* data;
+    Node* next;
+  };
+
+  Node* head;
+
+  Node* GetTail();
+
+  Node* GetNodeAt(int index);
+};
+
+template <typename T>
+inline LinkedList<T>::LinkedList() {
+  head = new Node{nullptr, nullptr};
+}
+
+template <typename T>
+LinkedList<T>::~LinkedList() {
+  Node* ptr = head;
+  Node* next = head->next;
+  while (ptr != nullptr) {
+    next = ptr->next;
+    delete ptr;
+    ptr = next;
+  }
+}
+
+template <typename T>
+inline void LinkedList<T>::Append(T* item) {
+  Node* tail = GetTail();
+  tail->next = new Node{item, nullptr};
+}
+
+template <typename T>
+void LinkedList<T>::DeleteAt(size_t index) {
+  Node* prev = index == 0 ? head : GetNodeAt(index - 1);
+  Node* ptr = prev->next;
+  prev->next = prev->next->next;
+  delete ptr;
+}
+
+template <typename T>
+void LinkedList<T>::AddAt(size_t index, T* item) {
+  Node* ptr = GetNodeAt(index);
+  ptr->next = new Node{item, nullptr};
+}
+
+template <typename T>
+LinkedList<T>::Node* LinkedList<T>::GetTail() {
+  Node* tail = head;
+  while ((tail = tail->next) != nullptr);
+  return tail;
+}
+
+template <typename T>
+LinkedList<T>::Node* LinkedList<T>::GetNodeAt(int index) {
+  Node* ptr = head->next;
+  if (ptr == nullptr) {
+    throw std::out_of_range("index out of bound");
+  }
+
+  for (size_t i = 0; i < index; i++) {
+    ptr = ptr->next;
+    if (ptr == null) {
+      throw std::out_of_range("index out of bound");
+    }
+  }
+
+  return ptr;
+}
+
+}  // namespace cppds

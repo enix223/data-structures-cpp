@@ -28,6 +28,8 @@
 
 #include "comparable.hpp"
 
+namespace cppds {
+
 template <typename Comparable>
 class BinaryHeap {
  public:
@@ -150,3 +152,5 @@ void BinaryHeap<Comparable>::Swap(size_t i, size_t j) {
   data_.at(i) = data_.at(j);
   data_.at(j) = tmp;
 }
+
+}  // namespace cppds
