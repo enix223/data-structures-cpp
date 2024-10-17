@@ -40,6 +40,12 @@ class LinkedList {
 
   void AddAt(size_t index, T* item);
 
+  T* GetAt(size_t index) { return GetNodeAt(index)->data; };
+
+  T* GetHead() { return head->next == nullptr ? nullptr : head->next->data; };
+
+  T* GetTail() { return GetTailNode()->data; };
+
  private:
   struct Node {
     T* data;
@@ -48,9 +54,9 @@ class LinkedList {
 
   Node* head;
 
-  Node* GetTail();
+  Node* GetTailNode();
 
-  Node* GetNodeAt(int index);
+  Node* GetNodeAt(size_t index);
 };
 
 template <typename T>
@@ -71,7 +77,7 @@ LinkedList<T>::~LinkedList() {
 
 template <typename T>
 inline void LinkedList<T>::Append(T* item) {
-  Node* tail = GetTail();
+  Node* tail = GetTailNode();
   tail->next = new Node{item, nullptr};
 }
 
@@ -90,14 +96,16 @@ void LinkedList<T>::AddAt(size_t index, T* item) {
 }
 
 template <typename T>
-LinkedList<T>::Node* LinkedList<T>::GetTail() {
+LinkedList<T>::Node* LinkedList<T>::GetTailNode() {
   Node* tail = head;
-  while ((tail = tail->next) != nullptr);
+  while (tail->next != nullptr) {
+    tail = tail->next;
+  }
   return tail;
 }
 
 template <typename T>
-LinkedList<T>::Node* LinkedList<T>::GetNodeAt(int index) {
+LinkedList<T>::Node* LinkedList<T>::GetNodeAt(size_t index) {
   Node* ptr = head->next;
   if (ptr == nullptr) {
     throw std::out_of_range("index out of bound");
@@ -105,7 +113,7 @@ LinkedList<T>::Node* LinkedList<T>::GetNodeAt(int index) {
 
   for (size_t i = 0; i < index; i++) {
     ptr = ptr->next;
-    if (ptr == null) {
+    if (ptr == nullptr) {
       throw std::out_of_range("index out of bound");
     }
   }
