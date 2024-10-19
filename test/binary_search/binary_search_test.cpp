@@ -22,6 +22,7 @@
  */
 #include "binary_search.hpp"
 
+#include <cstdint>
 #include <vector>
 
 #include "gtest/gtest.h"

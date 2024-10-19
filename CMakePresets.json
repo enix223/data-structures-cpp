@@ -27,16 +27,27 @@
       }
     },
     {
-        "name": "macos-debug",
-        "displayName": "MacOS Debug",
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/out/build/${presetName}",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Debug",
-          "CMAKE_TOOLCHAIN_FILE": "",
-          "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
-        }
+      "name": "macos-debug",
+      "displayName": "MacOS Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
       }
+    },
+    {
+      "name": "linux-debug",
+      "displayName": "Linux Debug",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}"
+      }
+    }
   ],
   "buildPresets": [
     {
@@ -46,10 +57,16 @@
       "jobs": 4
     },
     {
-        "name": "macos-debug",
-        "hidden": false,
-        "configurePreset": "macos-debug",
-        "jobs": 4
-      }
+      "name": "macos-debug",
+      "hidden": false,
+      "configurePreset": "macos-debug",
+      "jobs": 4
+    },
+    {
+      "name": "linux-debug",
+      "hidden": false,
+      "configurePreset": "linux-debug",
+      "jobs": 4
+    }
   ]
 }

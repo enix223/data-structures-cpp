@@ -24,6 +24,7 @@
 #pragma once
 
 #include <concepts>
+#include <cstdint>
 #include <vector>
 
 #include "comparable.hpp"

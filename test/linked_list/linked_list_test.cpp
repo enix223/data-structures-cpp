@@ -27,27 +27,26 @@
 
 static cppds::LinkedList<int> *createLinkedList() {
   auto linkedList = new cppds::LinkedList<int>{};
-  int *a = new int{10}, *b = new int{11}, *c = new int{12};
-  linkedList->Append(a);
-  linkedList->Append(b);
-  linkedList->Append(c);
+  linkedList->Append(10);
+  linkedList->Append(11);
+  linkedList->Append(12);
   return linkedList;
 }
 
 TEST(linked_list, append_should_work) {
   auto linkedList = createLinkedList();
   auto v = linkedList->GetAt(0);
-  EXPECT_EQ(10, *v);
+  EXPECT_EQ(10, v);
 }
 
 TEST(linked_list, get_head_value_should_work) {
   auto linkedList = createLinkedList();
   auto v = linkedList->GetHead();
-  EXPECT_EQ(10, *v);
+  EXPECT_EQ(10, v);
 }
 
 TEST(linked_list, get_tail_value_should_work) {
   auto linkedList = createLinkedList();
   auto v = linkedList->GetTail();
-  EXPECT_EQ(12, *v);
+  EXPECT_EQ(12, v);
 }

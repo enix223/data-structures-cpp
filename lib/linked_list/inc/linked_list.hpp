@@ -30,25 +30,27 @@ namespace cppds {
 template <typename T>
 class LinkedList {
  public:
-  explicit LinkedList();
+  explicit LinkedList() : head(nullptr) {}
 
   ~LinkedList();
 
-  void Append(T* item);
+  bool IsEmpty() { return head == nullptr; }
+
+  void Append(const T&& item);
 
   void DeleteAt(size_t index);
 
-  void AddAt(size_t index, T* item);
+  void AddAt(size_t index, const T&& item);
 
-  T* GetAt(size_t index) { return GetNodeAt(index)->data; };
+  const T& GetAt(size_t index) { return GetNodeAt(index)->data; }
 
-  T* GetHead() { return head->next == nullptr ? nullptr : head->next->data; };
+  const T& GetHead() { return head == nullptr ? throw std::out_of_range("out of bound") : head->data; }
 
-  T* GetTail() { return GetTailNode()->data; };
+  const T& GetTail() { return GetTailNode()->data; }
 
  private:
   struct Node {
-    T* data;
+    const T& data;
     Node* next;
   };
 
@@ -57,48 +59,64 @@ class LinkedList {
   Node* GetTailNode();
 
   Node* GetNodeAt(size_t index);
+
+  void AssertNotEmpty() {
+    if (IsEmpty()) throw std::out_of_range("out of bound");
+  }
 };
 
 template <typename T>
-inline LinkedList<T>::LinkedList() {
-  head = new Node{nullptr, nullptr};
-}
-
-template <typename T>
 LinkedList<T>::~LinkedList() {
+  if (IsEmpty()) {
+    return;
+  }
+
   Node* ptr = head;
-  Node* next = head->next;
   while (ptr != nullptr) {
-    next = ptr->next;
+    Node* next = ptr->next;
     delete ptr;
     ptr = next;
   }
 }
 
 template <typename T>
-inline void LinkedList<T>::Append(T* item) {
+void LinkedList<T>::Append(const T&& item) {
+  if (IsEmpty()) {
+    head = new Node{item, nullptr};
+    return;
+  }
   Node* tail = GetTailNode();
   tail->next = new Node{item, nullptr};
 }
 
 template <typename T>
 void LinkedList<T>::DeleteAt(size_t index) {
-  Node* prev = index == 0 ? head : GetNodeAt(index - 1);
+  AssertNotEmpty();
+  if (index == 0) {
+    Node* ptr = head;
+    head = head->next;
+    delete ptr;
+    return;
+  }
+
+  Node* prev = GetNodeAt(index - 1);
   Node* ptr = prev->next;
   prev->next = prev->next->next;
   delete ptr;
 }
 
 template <typename T>
-void LinkedList<T>::AddAt(size_t index, T* item) {
+void LinkedList<T>::AddAt(size_t index, const T&& item) {
   Node* ptr = GetNodeAt(index);
   ptr->next = new Node{item, nullptr};
 }
 
 template <typename T>
 LinkedList<T>::Node* LinkedList<T>::GetTailNode() {
+  AssertNotEmpty();
+
   Node* tail = head;
-  while (tail->next != nullptr) {
+  while (tail != nullptr) {
     tail = tail->next;
   }
   return tail;
@@ -106,18 +124,18 @@ LinkedList<T>::Node* LinkedList<T>::GetTailNode() {
 
 template <typename T>
 LinkedList<T>::Node* LinkedList<T>::GetNodeAt(size_t index) {
-  Node* ptr = head->next;
-  if (ptr == nullptr) {
-    throw std::out_of_range("index out of bound");
-  }
+  AssertNotEmpty();
 
+  Node* ptr = head;
   for (size_t i = 0; i < index; i++) {
     ptr = ptr->next;
     if (ptr == nullptr) {
       throw std::out_of_range("index out of bound");
     }
   }
-
+  if (ptr == nullptr) {
+    throw std::out_of_range("index out of bound");
+  }
   return ptr;
 }
 
