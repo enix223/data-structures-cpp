@@ -22,6 +22,7 @@
  */
 
 #pragma once
+#include <memory>
 #include <stdexcept>
 #include <vector>
 
@@ -34,7 +35,9 @@ class LinkedList {
 
   ~LinkedList();
 
-  bool IsEmpty() { return head == nullptr; }
+  size_t Size() const;
+
+  bool IsEmpty() const { return head == nullptr; }
 
   void Append(const T&& item);
 
@@ -42,35 +45,31 @@ class LinkedList {
 
   void AddAt(size_t index, const T&& item);
 
-  const T& GetAt(size_t index) { return GetNodeAt(index)->data; }
+  const T& GetAt(size_t index) const { return *(GetNodeAt(index)->data); }
 
-  const T& GetHead() { return head == nullptr ? throw std::out_of_range("out of bound") : head->data; }
+  const T& GetHead() const { return head == nullptr ? throw std::out_of_range("out of bound") : *(head->data); }
 
-  const T& GetTail() { return GetTailNode()->data; }
+  const T& GetTail() const { return *(GetTailNode()->data); }
 
  private:
   struct Node {
-    const T& data;
+    std::shared_ptr<T> data;
     Node* next;
   };
 
   Node* head;
 
-  Node* GetTailNode();
+  Node* GetTailNode() const;
 
-  Node* GetNodeAt(size_t index);
+  Node* GetNodeAt(size_t index) const;
 
-  void AssertNotEmpty() {
+  void AssertNotEmpty() const {
     if (IsEmpty()) throw std::out_of_range("out of bound");
   }
 };
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
-  if (IsEmpty()) {
-    return;
-  }
-
   Node* ptr = head;
   while (ptr != nullptr) {
     Node* next = ptr->next;
@@ -80,13 +79,24 @@ LinkedList<T>::~LinkedList() {
 }
 
 template <typename T>
+size_t LinkedList<T>::Size() const {
+  size_t s = 0;
+  Node* ptr = head;
+  while (ptr != nullptr) {
+    ptr = ptr->next;
+    s++;
+  }
+  return s;
+}
+
+template <typename T>
 void LinkedList<T>::Append(const T&& item) {
   if (IsEmpty()) {
-    head = new Node{item, nullptr};
+    head = new Node{std::make_shared<T>(item), nullptr};
     return;
   }
   Node* tail = GetTailNode();
-  tail->next = new Node{item, nullptr};
+  tail->next = new Node{std::make_shared<T>(item), nullptr};
 }
 
 template <typename T>
@@ -101,39 +111,42 @@ void LinkedList<T>::DeleteAt(size_t index) {
 
   Node* prev = GetNodeAt(index - 1);
   Node* ptr = prev->next;
-  prev->next = prev->next->next;
+  prev->next = ptr->next;
   delete ptr;
 }
 
 template <typename T>
 void LinkedList<T>::AddAt(size_t index, const T&& item) {
-  Node* ptr = GetNodeAt(index);
-  ptr->next = new Node{item, nullptr};
+  if (index == 0) {
+    head = new Node{std::make_shared<T>(item), head};
+    return;
+  }
+  Node* prev = GetNodeAt(index - 1);
+  prev->next = new Node{std::make_shared<T>(item), prev->next};
 }
 
 template <typename T>
-LinkedList<T>::Node* LinkedList<T>::GetTailNode() {
+LinkedList<T>::Node* LinkedList<T>::GetTailNode() const {
   AssertNotEmpty();
 
   Node* tail = head;
-  while (tail != nullptr) {
+  while (tail != nullptr && tail->next != nullptr) {
     tail = tail->next;
   }
   return tail;
 }
 
 template <typename T>
-LinkedList<T>::Node* LinkedList<T>::GetNodeAt(size_t index) {
+LinkedList<T>::Node* LinkedList<T>::GetNodeAt(size_t index) const {
   AssertNotEmpty();
 
   Node* ptr = head;
-  for (size_t i = 0; i < index; i++) {
+  size_t i = 0;
+  while (i < index && ptr != nullptr) {
+    i++;
     ptr = ptr->next;
-    if (ptr == nullptr) {
-      throw std::out_of_range("index out of bound");
-    }
   }
-  if (ptr == nullptr) {
+  if (i != index || ptr == nullptr) {
     throw std::out_of_range("index out of bound");
   }
   return ptr;

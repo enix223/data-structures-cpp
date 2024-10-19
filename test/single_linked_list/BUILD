@@ -1,5 +1,5 @@
 cc_test(
-    name = "linked_list_test",
+    name = "single_linked_list_test",
     timeout = "short",
     srcs = glob(["**/*.cpp"]),
     copts = select({
@@ -8,7 +8,7 @@ cc_test(
         "@platforms//os:macos": ["-std=c++20"],
     }),
     deps = [
-        "//lib/linked_list",
+        "//lib/single_linked_list",
         "@gtest",
         "@gtest//:gtest_main",
     ],
