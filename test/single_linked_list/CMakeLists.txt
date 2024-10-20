@@ -1,6 +1,7 @@
 add_executable(
     single_linked_list_test
-    single_linked_list_test.cpp
+    single_linked_list_int_test.cpp
+    single_linked_list_class_test.cpp
 )
 
 target_include_directories(

@@ -39,11 +39,15 @@ class LinkedList {
 
   bool IsEmpty() const { return head == nullptr; }
 
-  void Append(const T&& item);
+  void Append(const T&& item) { Append(item); }
+
+  void Append(const T& item);
 
   void DeleteAt(size_t index);
 
-  void AddAt(size_t index, const T&& item);
+  void AddAt(size_t index, const T& item);
+
+  void AddAt(size_t index, const T&& item) { AddAt(index, item); }
 
   const T& GetAt(size_t index) const { return *(GetNodeAt(index)->data); }
 
@@ -53,7 +57,7 @@ class LinkedList {
 
  private:
   struct Node {
-    std::shared_ptr<T> data;
+    std::unique_ptr<T> data;
     Node* next;
   };
 
@@ -66,6 +70,8 @@ class LinkedList {
   void AssertNotEmpty() const {
     if (IsEmpty()) throw std::out_of_range("out of bound");
   }
+
+  Node* MakeNode(const T& item, Node* next) const { return new Node{std::make_unique<T>(item), next}; }
 };
 
 template <typename T>
@@ -90,13 +96,13 @@ size_t LinkedList<T>::Size() const {
 }
 
 template <typename T>
-void LinkedList<T>::Append(const T&& item) {
+void LinkedList<T>::Append(const T& item) {
   if (IsEmpty()) {
-    head = new Node{std::make_shared<T>(item), nullptr};
+    head = MakeNode(item, nullptr);
     return;
   }
   Node* tail = GetTailNode();
-  tail->next = new Node{std::make_shared<T>(item), nullptr};
+  tail->next = MakeNode(item, nullptr);
 }
 
 template <typename T>
@@ -116,13 +122,13 @@ void LinkedList<T>::DeleteAt(size_t index) {
 }
 
 template <typename T>
-void LinkedList<T>::AddAt(size_t index, const T&& item) {
+void LinkedList<T>::AddAt(size_t index, const T& item) {
   if (index == 0) {
-    head = new Node{std::make_shared<T>(item), head};
+    head = MakeNode(item, head);
     return;
   }
   Node* prev = GetNodeAt(index - 1);
-  prev->next = new Node{std::make_shared<T>(item), prev->next};
+  prev->next = MakeNode(item, prev->next);
 }
 
 template <typename T>
