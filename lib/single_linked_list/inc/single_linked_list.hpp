@@ -98,11 +98,11 @@ size_t LinkedList<T>::Size() const {
 template <typename T>
 void LinkedList<T>::Append(const T& item) {
   if (IsEmpty()) {
-    head = MakeNode(item, nullptr);
+    head = MakeNode(std::move(item), nullptr);
     return;
   }
   Node* tail = GetTailNode();
-  tail->next = MakeNode(item, nullptr);
+  tail->next = MakeNode(std::move(item), nullptr);
 }
 
 template <typename T>
