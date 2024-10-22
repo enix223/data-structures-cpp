@@ -45,6 +45,17 @@ class Value {
     another.internal_values = nullptr;
   }
 
+  Value &operator=(Value &&another) {
+    if (this == &another) {
+      return *this;
+    }
+
+    delete[] internal_values;
+    m_size = another.m_size;
+    internal_values = another.internal_values;
+    return *this;
+  }
+
   ~Value() { delete[] internal_values; }
 
   size_t GetSize() const { return m_size; };

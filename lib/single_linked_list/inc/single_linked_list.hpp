@@ -22,43 +22,61 @@
  */
 
 #pragma once
-#include <memory>
 #include <stdexcept>
+#include <utility>
 #include <vector>
 
 namespace cppds {
 
+// SingleLinkedList represent a linked list with only a header point to the
+// start of the list.
+//
+// ::Layout::
+//
+// head ->[ node1 ]  +->[ node1 ]  +->[ node1 ]
+//        [-------]  |  [-------]  |  [-------]
+//        [ data  ]  |  [ data  ]  |  [ data  ]
+//        [ next  ]--+  [ next  ]--+  [ next  ]-->|| nullptr
+//
 template <typename T>
 class LinkedList {
  public:
+  // Default construtor will initialize a linked list with a head pointer
+  // pointing to null.
   explicit LinkedList() : head(nullptr) {}
 
   ~LinkedList();
 
+  // Return the size of the linked list
   size_t Size() const;
 
+  // Return linked list empty or not
   bool IsEmpty() const { return head == nullptr; }
 
-  void Append(const T&& item) { Append(item); }
+  // Append an item to the end of the linked list, accept rvalue.
+  void Append(T&& item) { Append(item); }
 
-  void Append(const T& item);
+  // Append an item to the end of the linked list, accept lvalue.
+  void Append(T& item);
 
   void DeleteAt(size_t index);
 
-  void AddAt(size_t index, const T& item);
+  void AddAt(size_t index, T& item);
 
-  void AddAt(size_t index, const T&& item) { AddAt(index, item); }
+  void AddAt(size_t index, T&& item) { AddAt(index, item); }
 
-  const T& GetAt(size_t index) const { return *(GetNodeAt(index)->data); }
+  T& GetAt(size_t index) const { return GetNodeAt(index)->data; }
 
-  const T& GetHead() const { return head == nullptr ? throw std::out_of_range("out of bound") : *(head->data); }
+  T& GetHead() const { return head == nullptr ? throw std::out_of_range("out of bound") : head->data; }
 
-  const T& GetTail() const { return *(GetTailNode()->data); }
+  T& GetTail() const { return GetTailNode()->data; }
 
  private:
   struct Node {
-    std::unique_ptr<T> data;
+    T data;
     Node* next;
+
+    Node(T&& p_data, Node* p_next) : data(std::move(p_data)), next(p_next) {}
   };
 
   Node* head;
@@ -71,7 +89,7 @@ class LinkedList {
     if (IsEmpty()) throw std::out_of_range("out of bound");
   }
 
-  Node* MakeNode(const T& item, Node* next) const { return new Node{std::make_unique<T>(item), next}; }
+  Node* MakeNode(T& item, Node* next) const { return new Node{std::move(item), next}; }
 };
 
 template <typename T>
@@ -96,13 +114,13 @@ size_t LinkedList<T>::Size() const {
 }
 
 template <typename T>
-void LinkedList<T>::Append(const T& item) {
+void LinkedList<T>::Append(T& item) {
   if (IsEmpty()) {
-    head = MakeNode(std::move(item), nullptr);
+    head = MakeNode(item, nullptr);
     return;
   }
   Node* tail = GetTailNode();
-  tail->next = MakeNode(std::move(item), nullptr);
+  tail->next = MakeNode(item, nullptr);
 }
 
 template <typename T>
@@ -122,7 +140,7 @@ void LinkedList<T>::DeleteAt(size_t index) {
 }
 
 template <typename T>
-void LinkedList<T>::AddAt(size_t index, const T& item) {
+void LinkedList<T>::AddAt(size_t index, T& item) {
   if (index == 0) {
     head = MakeNode(item, head);
     return;
