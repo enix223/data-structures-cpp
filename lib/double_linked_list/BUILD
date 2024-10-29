@@ -1,5 +1,5 @@
 cc_library(
-    name = "single_linked_list",
+    name = "double_linked_list",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["inc/*.hpp"]),
     includes = ["inc"],

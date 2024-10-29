@@ -24,7 +24,8 @@
 #pragma once
 #include <stdexcept>
 #include <utility>
-#include <vector>
+
+#include "linked_list.hpp"
 
 namespace cppds {
 
@@ -39,13 +40,13 @@ namespace cppds {
 //        [ next  ]--+  [ next  ]--+  [ next  ]-->|| nullptr
 //
 template <typename T>
-class LinkedList {
+class SingleLinkedList : public LinkedList<T> {
  public:
   // Default construtor will initialize a linked list with a head pointer
   // pointing to null.
-  explicit LinkedList() : head(nullptr) {}
+  explicit SingleLinkedList() : head(nullptr) {}
 
-  ~LinkedList();
+  ~SingleLinkedList();
 
   // Return the size of the linked list
   size_t Size() const;
@@ -93,7 +94,7 @@ class LinkedList {
 };
 
 template <typename T>
-LinkedList<T>::~LinkedList() {
+SingleLinkedList<T>::~SingleLinkedList() {
   Node* ptr = head;
   while (ptr != nullptr) {
     Node* next = ptr->next;
@@ -103,7 +104,7 @@ LinkedList<T>::~LinkedList() {
 }
 
 template <typename T>
-size_t LinkedList<T>::Size() const {
+size_t SingleLinkedList<T>::Size() const {
   size_t s = 0;
   Node* ptr = head;
   while (ptr != nullptr) {
@@ -114,7 +115,7 @@ size_t LinkedList<T>::Size() const {
 }
 
 template <typename T>
-void LinkedList<T>::Append(T& item) {
+void SingleLinkedList<T>::Append(T& item) {
   if (IsEmpty()) {
     head = MakeNode(item, nullptr);
     return;
@@ -124,7 +125,7 @@ void LinkedList<T>::Append(T& item) {
 }
 
 template <typename T>
-void LinkedList<T>::DeleteAt(size_t index) {
+void SingleLinkedList<T>::DeleteAt(size_t index) {
   AssertNotEmpty();
   if (index == 0) {
     Node* ptr = head;
@@ -140,7 +141,7 @@ void LinkedList<T>::DeleteAt(size_t index) {
 }
 
 template <typename T>
-void LinkedList<T>::AddAt(size_t index, T& item) {
+void SingleLinkedList<T>::AddAt(size_t index, T& item) {
   if (index == 0) {
     head = MakeNode(item, head);
     return;
@@ -150,7 +151,7 @@ void LinkedList<T>::AddAt(size_t index, T& item) {
 }
 
 template <typename T>
-LinkedList<T>::Node* LinkedList<T>::GetTailNode() const {
+SingleLinkedList<T>::Node* SingleLinkedList<T>::GetTailNode() const {
   AssertNotEmpty();
 
   Node* tail = head;
@@ -161,7 +162,7 @@ LinkedList<T>::Node* LinkedList<T>::GetTailNode() const {
 }
 
 template <typename T>
-LinkedList<T>::Node* LinkedList<T>::GetNodeAt(size_t index) const {
+SingleLinkedList<T>::Node* SingleLinkedList<T>::GetNodeAt(size_t index) const {
   AssertNotEmpty();
 
   Node* ptr = head;

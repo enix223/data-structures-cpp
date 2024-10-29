@@ -24,8 +24,8 @@
 #include "gtest/gtest.h"
 #include "single_linked_list.hpp"
 
-static std::unique_ptr<cppds::LinkedList<int>> createLinkedList() {
-  auto linked_list = std::make_unique<cppds::LinkedList<int>>();
+static std::unique_ptr<cppds::SingleLinkedList<int>> createLinkedList() {
+  auto linked_list = std::make_unique<cppds::SingleLinkedList<int>>();
   linked_list->Append(10);
   linked_list->Append(11);
   linked_list->Append(12);
@@ -39,7 +39,7 @@ TEST(linked_list, append_should_work) {
 }
 
 TEST(linked_list, is_empty_should_return_false_for_empty_list) {
-  auto linked_list = cppds::LinkedList<int>{};
+  auto linked_list = cppds::SingleLinkedList<int>{};
   EXPECT_TRUE(linked_list.IsEmpty());
 }
 
@@ -61,7 +61,7 @@ TEST(linked_list, get_tail_value_should_work) {
 }
 
 TEST(linked_list, delete_at_should_throw_when_index_out_of_bound) {
-  cppds::LinkedList<int> linked_list{};
+  cppds::SingleLinkedList<int> linked_list{};
   EXPECT_THROW({ linked_list.DeleteAt(0); }, std::out_of_range);
 }
 
@@ -73,7 +73,7 @@ TEST(linked_list, delete_at_should_work_for_valid_index) {
 }
 
 TEST(linked_list, add_at_should_throw_when_index_out_of_bound) {
-  cppds::LinkedList<int> linked_list{};
+  cppds::SingleLinkedList<int> linked_list{};
   EXPECT_THROW({ linked_list.AddAt(1, 99); }, std::out_of_range);
 }
 
@@ -93,13 +93,13 @@ TEST(linked_list, add_at_should_work_for_valid_index) {
 }
 
 TEST(linked_list, add_at_should_work_when_index_eq_0_and_list_empty) {
-  cppds::LinkedList<int> linked_list{};
+  cppds::SingleLinkedList<int> linked_list{};
   EXPECT_NO_THROW({ linked_list.AddAt(0, 9); });
   EXPECT_EQ(9, linked_list.GetHead());
 }
 
 TEST(linked_list, size_should_return_0_when_list_empty) {
-  cppds::LinkedList<int> linked_list{};
+  cppds::SingleLinkedList<int> linked_list{};
   EXPECT_EQ(0, linked_list.Size());
 
   linked_list.Append(1);

@@ -4,6 +4,7 @@ set(HEADERS
     binary_search/inc/binary_search.hpp
     dynamic_array/inc/dynamic_array.hpp
     single_linked_list/inc/single_linked_list.hpp
+    double_linked_list/inc/double_linked_list.hpp
 )
 
 add_library(cppds INTERFACE ${HEADERS})
