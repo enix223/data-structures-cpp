@@ -30,7 +30,7 @@ namespace cppds {
 template <typename T>
 class DoubleLinkedList : public LinkedList<T> {
  public:
-  explicit DoubleLinkedList() : head(nullptr), tail(nullptr) {}
+  explicit DoubleLinkedList() : head(nullptr), tail(nullptr), m_size(0) {}
 
   ~DoubleLinkedList();
 
@@ -118,13 +118,15 @@ void DoubleLinkedList<T>::DeleteAt(size_t index) {
 
 template <typename T>
 void DoubleLinkedList<T>::AddAt(size_t index, T &item) {
+  Node *newNode;
   if (index == 0) {
-    head = MakeNode(item, nullptr, head);
-    return;
+    newNode = MakeNode(item, nullptr, head);
+    head = newNode;
+  } else {
+    Node *prev = GetNodeAt(index - 1);
+    newNode = MakeNode(item, prev, prev->next);
+    prev->next = newNode;
   }
-  Node *ptr = GetNodeAt(index);
-  Node *newNode = MakeNode(item, ptr->prev, ptr);
-  ptr->prev->next = newNode;
   if (index == m_size) {
     tail = newNode;
   }

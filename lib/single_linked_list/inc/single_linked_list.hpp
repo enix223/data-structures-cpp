@@ -44,12 +44,12 @@ class SingleLinkedList : public LinkedList<T> {
  public:
   // Default construtor will initialize a linked list with a head pointer
   // pointing to null.
-  explicit SingleLinkedList() : head(nullptr) {}
+  explicit SingleLinkedList() : head(nullptr), m_size(0) {}
 
   ~SingleLinkedList();
 
   // Return the size of the linked list
-  size_t Size() const;
+  size_t Size() const { return m_size; }
 
   // Return linked list empty or not
   bool IsEmpty() const { return head == nullptr; }
@@ -58,7 +58,7 @@ class SingleLinkedList : public LinkedList<T> {
   void Append(T&& item) { Append(item); }
 
   // Append an item to the end of the linked list, accept lvalue.
-  void Append(T& item);
+  void Append(T& item) { AddAt(m_size, item); }
 
   void DeleteAt(size_t index);
 
@@ -82,6 +82,8 @@ class SingleLinkedList : public LinkedList<T> {
 
   Node* head;
 
+  size_t m_size;
+
   Node* GetTailNode() const;
 
   Node* GetNodeAt(size_t index) const;
@@ -104,27 +106,6 @@ SingleLinkedList<T>::~SingleLinkedList() {
 }
 
 template <typename T>
-size_t SingleLinkedList<T>::Size() const {
-  size_t s = 0;
-  Node* ptr = head;
-  while (ptr != nullptr) {
-    ptr = ptr->next;
-    s++;
-  }
-  return s;
-}
-
-template <typename T>
-void SingleLinkedList<T>::Append(T& item) {
-  if (IsEmpty()) {
-    head = MakeNode(item, nullptr);
-    return;
-  }
-  Node* tail = GetTailNode();
-  tail->next = MakeNode(item, nullptr);
-}
-
-template <typename T>
 void SingleLinkedList<T>::DeleteAt(size_t index) {
   AssertNotEmpty();
   if (index == 0) {
@@ -138,16 +119,20 @@ void SingleLinkedList<T>::DeleteAt(size_t index) {
   Node* ptr = prev->next;
   prev->next = ptr->next;
   delete ptr;
+
+  m_size--;
 }
 
 template <typename T>
 void SingleLinkedList<T>::AddAt(size_t index, T& item) {
   if (index == 0) {
     head = MakeNode(item, head);
-    return;
+  } else {
+    Node* prev = GetNodeAt(index - 1);
+    prev->next = MakeNode(item, prev->next);
   }
-  Node* prev = GetNodeAt(index - 1);
-  prev->next = MakeNode(item, prev->next);
+
+  m_size++;
 }
 
 template <typename T>

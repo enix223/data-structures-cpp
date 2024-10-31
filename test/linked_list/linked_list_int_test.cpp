@@ -42,6 +42,7 @@ class LinkedListIntTest : public testing::Test {
 TYPED_TEST_SUITE_P(LinkedListIntTest);
 
 TYPED_TEST_P(LinkedListIntTest, AppendShouldWork) {
+  this->initWithValues();
   auto v = this->impl.GetAt(0);
   EXPECT_EQ(10, v);
 }
