@@ -34,11 +34,11 @@ class DoubleLinkedList : public LinkedList<T> {
 
   ~DoubleLinkedList();
 
-  size_t Size() const;
+  size_t Size() const { return m_size; }
 
   void Append(T &&item) { Append(item); }
 
-  void Append(T &item);
+  void Append(T &item) { AddAt(m_size, item); }
 
   void DeleteAt(size_t index);
 
@@ -73,6 +73,8 @@ class DoubleLinkedList : public LinkedList<T> {
 
   Node *tail;
 
+  size_t m_size;
+
   Node *GetNodeAt(size_t index) const;
 
   void AssertNotEmpty() const {
@@ -93,27 +95,6 @@ DoubleLinkedList<T>::~DoubleLinkedList() {
 }
 
 template <typename T>
-size_t DoubleLinkedList<T>::Size() const {
-  size_t size = 0;
-  Node *ptr = head;
-  while (ptr != nullptr) {
-    ptr = ptr->next;
-    size++;
-  }
-  return size;
-}
-
-template <typename T>
-void DoubleLinkedList<T>::Append(T &item) {
-  if (IsEmpty()) {
-    tail = head = MakeNode(item, nullptr, nullptr);
-    return;
-  }
-
-  tail = MakeNode(item, tail, nullptr);
-}
-
-template <typename T>
 void DoubleLinkedList<T>::DeleteAt(size_t index) {
   AssertNotEmpty();
   if (index == 0) {
@@ -126,6 +107,13 @@ void DoubleLinkedList<T>::DeleteAt(size_t index) {
   Node *ptr = GetNodeAt(index);
   ptr->prev->next = ptr->next;
   delete ptr;
+
+  if (index == m_size - 1) {
+    ptr->prev->next = nullptr;
+    tail = ptr->prev;
+  }
+
+  m_size--;
 }
 
 template <typename T>
@@ -135,7 +123,12 @@ void DoubleLinkedList<T>::AddAt(size_t index, T &item) {
     return;
   }
   Node *ptr = GetNodeAt(index);
-  ptr->prev->next = MakeNode(item, ptr->prev, ptr);
+  Node *newNode = MakeNode(item, ptr->prev, ptr);
+  ptr->prev->next = newNode;
+  if (index == m_size) {
+    tail = newNode;
+  }
+  m_size++;
 }
 
 template <typename T>

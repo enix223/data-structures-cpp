@@ -21,11 +21,12 @@
  * IN THE SOFTWARE.
  */
 
-#pragma once;
+#pragma once
 
 namespace cppds {
 template <typename T>
 class LinkedList {
+ public:
   // Return the size of the linked list
   virtual size_t Size() const = 0;
 
