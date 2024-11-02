@@ -1,5 +1,5 @@
 cc_library(
-    name = "single_linked_list",
+    name = "queue",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["inc/*.hpp"]),
     includes = ["inc"],
@@ -7,8 +7,5 @@ cc_library(
         "//lib:__subpackages__",
         "//src:__subpackages__",
         "//test:__subpackages__",
-    ],
-    deps = [
-        "//lib/linked_list",
     ],
 )

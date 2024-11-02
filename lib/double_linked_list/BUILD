@@ -9,7 +9,6 @@ cc_library(
         "//test:__subpackages__",
     ],
     deps = [
-        "//lib/common",
         "//lib/linked_list",
     ],
 )
