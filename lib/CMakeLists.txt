@@ -5,6 +5,8 @@ set(HEADERS
     dynamic_array/inc/dynamic_array.hpp
     single_linked_list/inc/single_linked_list.hpp
     double_linked_list/inc/double_linked_list.hpp
+    queue/inc/queue.hpp
+    single_linked_queue/inc/single_linked_queue.hpp
 )
 
 add_library(cppds INTERFACE ${HEADERS})
