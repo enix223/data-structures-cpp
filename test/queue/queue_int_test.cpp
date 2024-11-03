@@ -21,6 +21,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "double_linked_queue.hpp"
 #include "gtest/gtest.h"
 #include "queue.hpp"
 #include "single_linked_queue.hpp"
@@ -70,5 +71,5 @@ REGISTER_TYPED_TEST_SUITE_P(QueueIntTest, EqueneLValueShouldWork, EqueneRValueSh
                             EmptyQueueIsEmptyShouldReturnTrue, NonEmptyQueueIsEmptyShouldReturnFalse,
                             EnqueueLotOfItemsShouldWork, SizeShouldReturnCorrectResult);
 
-using QueueIntTypes = testing::Types<cppds::SingleLinkedQueue<int>>;
+using QueueIntTypes = testing::Types<cppds::SingleLinkedQueue<int>, cppds::DoubleLinkedQueue<int>>;
 INSTANTIATE_TYPED_TEST_SUITE_P(QueueIntTestInstance, QueueIntTest, QueueIntTypes);

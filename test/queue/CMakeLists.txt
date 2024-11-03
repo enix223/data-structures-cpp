@@ -12,6 +12,7 @@ target_include_directories(
     ${CMAKE_SOURCE_DIR}/lib/single_linked_queue/inc/
     ${CMAKE_SOURCE_DIR}/lib/single_linked_list/inc/
     ${CMAKE_SOURCE_DIR}/lib/double_linked_list/inc/
+    ${CMAKE_SOURCE_DIR}/lib/double_linked_queue/inc/
 )
 
 target_link_libraries(

@@ -1,5 +1,5 @@
 cc_library(
-    name = "single_linked_queue",
+    name = "double_linked_queue",
     srcs = glob(["*.cpp"]),
     hdrs = glob(["inc/*.hpp"]),
     includes = ["inc"],
@@ -9,7 +9,7 @@ cc_library(
         "//test:__subpackages__",
     ],
     deps = [
+        "//lib/double_linked_list",
         "//lib/queue",
-        "//lib/single_linked_list",
     ],
 )

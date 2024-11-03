@@ -7,6 +7,7 @@ set(HEADERS
     double_linked_list/inc/double_linked_list.hpp
     queue/inc/queue.hpp
     single_linked_queue/inc/single_linked_queue.hpp
+    double_linked_queue/inc/double_linked_queue.hpp
 )
 
 add_library(cppds INTERFACE ${HEADERS})
