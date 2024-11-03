@@ -36,7 +36,11 @@ class Queue {
 
   virtual void Enqueue(T &item) = 0;
 
-  virtual T &Dequeue() = 0;
+  virtual T &Front() = 0;
+
+  virtual T &Back() = 0;
+
+  virtual void Dequeue() = 0;
 };
 
 }  // namespace cppds

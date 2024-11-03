@@ -25,8 +25,50 @@
 #include "queue.hpp"
 #include "single_linked_queue.hpp"
 
-TEST(Queue, EqueneShouldWork) {
-  auto queue = new cppds::SingleLinkedQueue<int>;
-  queue->Enqueue(1);
-  EXPECT_EQ(1, queue->Dequeue());
+template <typename T>
+class QueueIntTest : public testing::Test {
+  static_assert(std::is_base_of<cppds::Queue<int>, T>::value, "T must be subclass of cppds::Queue");
+
+ public:
+  T impl;
+};
+
+TYPED_TEST_SUITE_P(QueueIntTest);
+
+TYPED_TEST_P(QueueIntTest, EqueneRValueShouldWork) {
+  this->impl.Enqueue(1);
+  EXPECT_EQ(1, this->impl.Front());
 }
+
+TYPED_TEST_P(QueueIntTest, EqueneLValueShouldWork) {
+  int i = 9876;
+  this->impl.Enqueue(i);
+  EXPECT_EQ(i, this->impl.Front());
+}
+
+TYPED_TEST_P(QueueIntTest, EmptyQueueIsEmptyShouldReturnTrue) { EXPECT_TRUE(this->impl.IsEmpty()); }
+
+TYPED_TEST_P(QueueIntTest, NonEmptyQueueIsEmptyShouldReturnFalse) {
+  this->impl.Enqueue(1);
+  EXPECT_FALSE(this->impl.IsEmpty());
+}
+
+TYPED_TEST_P(QueueIntTest, SizeShouldReturnCorrectResult) {
+  this->impl.Enqueue(1);
+  EXPECT_EQ(1, this->impl.Size());
+}
+
+TYPED_TEST_P(QueueIntTest, EnqueueLotOfItemsShouldWork) {
+  size_t size = 10000;
+  for (int i = 0; i < size; i++) {
+    this->impl.Enqueue(i);
+  }
+  EXPECT_EQ(size, this->impl.Size());
+}
+
+REGISTER_TYPED_TEST_SUITE_P(QueueIntTest, EqueneLValueShouldWork, EqueneRValueShouldWork,
+                            EmptyQueueIsEmptyShouldReturnTrue, NonEmptyQueueIsEmptyShouldReturnFalse,
+                            EnqueueLotOfItemsShouldWork, SizeShouldReturnCorrectResult);
+
+using QueueIntTypes = testing::Types<cppds::SingleLinkedQueue<int>>;
+INSTANTIATE_TYPED_TEST_SUITE_P(QueueIntTestInstance, QueueIntTest, QueueIntTypes);

@@ -39,11 +39,11 @@ class SingleLinkedQueue : public cppds::Queue<T>, private cppds::SingleLinkedLis
 
   size_t Size() const override { return cppds::SingleLinkedList<T>::Size(); }
 
-  T &Dequeue() override {
-    auto head = cppds::SingleLinkedList<T>::GetHead();
-    cppds::SingleLinkedList<T>::DeleteAt(0);
-    return head;
-  }
+  T &Front() override { return cppds::SingleLinkedList<T>::GetHead(); }
+
+  T &Back() override { return cppds::SingleLinkedList<T>::GetTail(); }
+
+  void Dequeue() override { cppds::SingleLinkedList<T>::DeleteAt(0); }
 };
 
 }  // namespace cppds
