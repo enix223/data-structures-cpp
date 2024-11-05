@@ -8,6 +8,8 @@ set(HEADERS
     queue/inc/queue.hpp
     single_linked_queue/inc/single_linked_queue.hpp
     double_linked_queue/inc/double_linked_queue.hpp
+    stack/inc/stack.hpp
+    linked_list_stack/inc/linked_list_stack.hpp
 )
 
 add_library(cppds INTERFACE ${HEADERS})
