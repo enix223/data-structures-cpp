@@ -21,6 +21,7 @@
  * IN THE SOFTWARE.
  */
 
+#include "array_stack.hpp"
 #include "gtest/gtest.h"
 #include "linked_list_stack.hpp"
 #include "stack.hpp"
@@ -70,5 +71,5 @@ REGISTER_TYPED_TEST_SUITE_P(StackIntTest, EqueneLValueShouldWork, EqueneRValueSh
                             EmptyQueueIsEmptyShouldReturnTrue, NonEmptyQueueIsEmptyShouldReturnFalse,
                             PushLotOfItemsShouldWork, SizeShouldReturnCorrectResult);
 
-using StackIntTypes = testing::Types<cppds::LinkedListStack<int>>;
+using StackIntTypes = testing::Types<cppds::LinkedListStack<int>, cppds::ArrayStack<int>>;
 INSTANTIATE_TYPED_TEST_SUITE_P(StackIntTestInstance, StackIntTest, StackIntTypes);

@@ -8,6 +8,7 @@ target_include_directories(
     PRIVATE
     ${CMAKE_SOURCE_DIR}/lib/stack/inc/
     ${CMAKE_SOURCE_DIR}/lib/linked_list_stack/inc/
+    ${CMAKE_SOURCE_DIR}/lib/array_stack/inc/
 )
 
 target_link_libraries(

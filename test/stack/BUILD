@@ -8,6 +8,7 @@ cc_test(
         "@platforms//os:macos": ["-std=c++20"],
     }),
     deps = [
+        "//lib/array_stack",
         "//lib/linked_list_stack",
         "//lib/stack",
         "@gtest",
