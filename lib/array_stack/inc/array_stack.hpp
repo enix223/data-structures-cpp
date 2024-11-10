@@ -33,24 +33,28 @@ namespace cppds {
 template <typename T>
 class ArrayStack : public Stack<T> {
  public:
-  explicit ArrayStack(size_t cap = 10) : _top(-1), _cap(cap) { _arr = new T[cap]; };
+  explicit ArrayStack(size_t cap = 10) {
+    _top = 0;
+    _cap = cap;
+    _arr = new T[cap];
+  };
 
   ~ArrayStack() { delete[] _arr; }
 
-  bool IsEmpty() const override { return _top == -1; }
+  bool IsEmpty() const override { return _top == 0; }
 
-  size_t Size() const override { return _top + 1; }
+  size_t Size() const override { return _top; }
 
   void Push(T &&item) override { Push(item); }
 
   void Push(T &item) override {
     EnsureSize();
-    _arr[++_top] = item;
+    _arr[_top++] = item;
   }
 
   T &Top() override {
     AssertNotEmpty();
-    return _arr[_top];
+    return _arr[_top - 1];
   }
 
   void Pop() override {
@@ -70,15 +74,15 @@ class ArrayStack : public Stack<T> {
   }
 
   void EnsureSize() {
-    if (Size() <= _cap) {
+    if (Size() < _cap) {
       return;
     }
 
     size_t new_cap = _cap * 2;
-    T *arr = new T[new_cap];
-    std::copy(_arr, _arr + _cap, arr);
+    T *newArr = new T[new_cap];
+    std::copy(_arr, _arr + _cap, newArr);
     delete[] _arr;
-    _arr = arr;
+    _arr = newArr;
     _cap = new_cap;
   }
 };

@@ -32,7 +32,7 @@ namespace cppds {
 template <typename T>
 class LinkedListStack : public Stack<T> {
  public:
-  explicit LinkedListStack() : _top(nullptr) {};
+  explicit LinkedListStack() : _top(nullptr), _size(0) {};
 
   bool IsEmpty() const override { return _size == 0; }
 

@@ -31,22 +31,22 @@
 
 namespace cppds {
 
-template <typename Comparable>
+template <cppds::Comparable T>
 class BinaryHeap {
  public:
   explicit BinaryHeap(int capaicty = 10);
-  explicit BinaryHeap(const std::vector<Comparable>& items);
+  explicit BinaryHeap(const std::vector<T>& items);
   ~BinaryHeap();
 
-  void Insert(Comparable& element);
-  void Insert(Comparable&& element);
+  void Insert(T& element);
+  void Insert(T&& element);
   bool IsEmpty() const;
-  const Comparable& Min() const;
+  const T& Min() const;
   void DeleteMin();
   void Clear();
 
  private:
-  std::vector<Comparable> data_;
+  std::vector<T> data_;
   size_t size_;
 
   void Heapify();
@@ -59,52 +59,52 @@ class BinaryHeap {
  * Public section
  */
 
-template <typename Comparable>
-BinaryHeap<Comparable>::BinaryHeap(int capcity) {
+template <cppds::Comparable T>
+BinaryHeap<T>::BinaryHeap(int capcity) {
   data_ = std::vector<int>(10);
   size_ = 0;
 }
 
-template <typename Comparable>
-BinaryHeap<Comparable>::BinaryHeap(const std::vector<Comparable>& items) {
+template <cppds::Comparable T>
+BinaryHeap<T>::BinaryHeap(const std::vector<T>& items) {
   data_ = items;
   size_ = items.size();
   Heapify();
 }
 
-template <typename Comparable>
-BinaryHeap<Comparable>::~BinaryHeap() {}
+template <cppds::Comparable T>
+BinaryHeap<T>::~BinaryHeap() {}
 
-template <typename Comparable>
-bool BinaryHeap<Comparable>::IsEmpty() const {
+template <cppds::Comparable T>
+bool BinaryHeap<T>::IsEmpty() const {
   return size_ == 0;
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Insert(Comparable& element) {
+template <cppds::Comparable T>
+void BinaryHeap<T>::Insert(T& element) {
   data_.push_back(element);
   Up(size_++);
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Insert(Comparable&& element) {
+template <cppds::Comparable T>
+void BinaryHeap<T>::Insert(T&& element) {
   Insert(element);
 }
 
-template <typename Comparable>
-const Comparable& BinaryHeap<Comparable>::Min() const {
+template <cppds::Comparable T>
+const T& BinaryHeap<T>::Min() const {
   return data_.at(0);
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::DeleteMin() {
+template <cppds::Comparable T>
+void BinaryHeap<T>::DeleteMin() {
   Swap(--size_, 0);
   data_.pop_back();
   Down(0);
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Clear() {
+template <cppds::Comparable T>
+void BinaryHeap<T>::Clear() {
   data_.clear();
   size_ = 0;
 }
@@ -113,15 +113,15 @@ void BinaryHeap<Comparable>::Clear() {
  * Private section
  */
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Heapify() {
+template <cppds::Comparable T>
+void BinaryHeap<T>::Heapify() {
   for (int64_t i = size_ / 2; i >= 0; i--) {
     Down(i);
   }
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Down(size_t index) {
+template <cppds::Comparable T>
+void BinaryHeap<T>::Down(size_t index) {
   size_t l = index * 2 + 1;
   size_t r = l + 1;
   size_t min = index;
@@ -138,8 +138,8 @@ void BinaryHeap<Comparable>::Down(size_t index) {
   Down(min);
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Up(size_t index) {
+template <cppds::Comparable T>
+void BinaryHeap<T>::Up(size_t index) {
   size_t p = index / 2;
   if (data_.at(p) > data_.at(index)) {
     Swap(p, index);
@@ -147,9 +147,9 @@ void BinaryHeap<Comparable>::Up(size_t index) {
   }
 }
 
-template <typename Comparable>
-void BinaryHeap<Comparable>::Swap(size_t i, size_t j) {
-  Comparable tmp = data_.at(i);
+template <cppds::Comparable T>
+void BinaryHeap<T>::Swap(size_t i, size_t j) {
+  T tmp = data_.at(i);
   data_.at(i) = data_.at(j);
   data_.at(j) = tmp;
 }
